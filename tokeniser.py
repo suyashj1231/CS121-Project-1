@@ -25,3 +25,14 @@ def compute_word_frequencies(tokens: list[Token]) -> dict[Token, int]:
 def print_frequencies(frequencies: dict[Token, int]) -> None:
     pass
 
+
+def main():
+    if len(sys.argv) != 2:
+        print("Error: Wrong Argument")
+        sys.exit(1)
+
+    tokens = tokenize(sys.argv[1])
+    print(tokens)
+
+if __name__ == "__main__":
+    main()
