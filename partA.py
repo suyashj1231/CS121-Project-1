@@ -14,8 +14,12 @@ def tokenize(text_file_path: str) -> list[Token]:
                     tokens.append(i.lower())
         return tokens
     except FileNotFoundError:
-        print(f"Error: File was not found.")
+        print("Error: File was not found.")
         sys.exit(1)
+    except UnicodeDecodeError:
+        print("Error: Not Unicode file.")
+        sys.exit(1)
+
 
 def compute_word_frequencies(tokens: list[Token]) -> dict[Token, int]:
     token_dict = {}
