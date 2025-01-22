@@ -1,7 +1,7 @@
 import sys
 import re
 from collections import defaultdict
-Token=0
+Token=""
 
 def tokenize(text_file_path: str) -> list[Token]:
     tokens = []
