@@ -1,5 +1,6 @@
 import sys
 import re
+from collections import defaultdict
 Token=0
 
 def tokenize(text_file_path: str) -> list[Token]:
@@ -16,14 +17,19 @@ def tokenize(text_file_path: str) -> list[Token]:
         print(f"Error: File was not found.")
         sys.exit(1)
 
-
-
-
 def compute_word_frequencies(tokens: list[Token]) -> dict[Token, int]:
-    pass
+    token_dict = {}
+    for i in tokens:
+        if i not in token_dict:
+            token_dict[i] = 0
+        token_dict[i] += 1
+    return token_dict
 
 def print_frequencies(frequencies: dict[Token, int]) -> None:
-    pass
+    sorted_dict = sorted(frequencies.items(), key=lambda item: item[1], reverse=True)
+    # print(sorted_dict)
+    for i, j in sorted_dict:
+        print(f"{i} {j}")
 
 
 def main():
@@ -32,7 +38,9 @@ def main():
         sys.exit(1)
 
     tokens = tokenize(sys.argv[1])
-    print(tokens)
+    # print(tokens)
+    token_dict = compute_word_frequencies(tokens)
+    print_frequencies(token_dict)
 
 if __name__ == "__main__":
     main()
