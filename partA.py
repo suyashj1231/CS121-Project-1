@@ -8,11 +8,14 @@ def tokenize(text_file_path: str) -> list[Token]:
         I used 2 exceptions one in case file is not found/ name is wrong, and non-unicode text is read.
         I also used a simple regex statement finding letters like (a-z), (A-Z), (0-9), (+, repetition operator)
         Here Time complexity appears to be o(n+m), where n is total text length and m is number of lines, but since
-        we can't have more tokens than characters, we can say Time complexity is o(n).
+        we can't have more tokens than characters, we can say Time complexity is o(n). o(token) is small (comparatively)
+        hence we don't add it in final time complexity
     '''
     tokens = [] # o(1)
     regex_pattern = re.compile(r"[A-Za-z0-9]+") # o(1)
     try:
+        if not text_file_path.lower().endswith('.txt'):
+            raise ValueError("Only text file allowed")
         with open(text_file_path, "r", encoding="utf-8") as f: # o(1)
             for line in f: # o(m)
                 match = regex_pattern.findall(line) # o(n)
@@ -20,7 +23,7 @@ def tokenize(text_file_path: str) -> list[Token]:
                     tokens.append(i.lower())
         return tokens # o(1)
     except FileNotFoundError:# o(1)
-        print("Error: File was not found.") # o(1)
+        print("Error: File was not found, type like <python3> <partA.py> <file1.txt>") # o(1)
         sys.exit(1)
     except UnicodeDecodeError:# o(1)
         print("Error: Not Unicode file.") # o(1)
@@ -39,6 +42,7 @@ def compute_word_frequencies(tokens: list[Token]) -> dict[Token, int]:
         token_dict[i] += 1 # o(1)
     return token_dict # o(1)
 
+
 def print_frequencies(frequencies: dict[Token, int]) -> None:
     ''' This function prints the sorted token in a  format "i -> j", we sort using the sorted function
         that has the time complexity of o(nlog(n)) and dominates the function. Hence, the time complexity of
@@ -49,16 +53,19 @@ def print_frequencies(frequencies: dict[Token, int]) -> None:
     for i, j in sorted_dict:  # o(n)
         print(f"{i} -> {j}") # o(1)
 
-
 def main():
+    '''
+        here the time complexity is o(nlog(n)) since print_frequencies dominates as o(n+n+nlog(n)) becomes
+        o(nlog(n))
+    '''
     if len(sys.argv) != 2:
         print("Error: Wrong Argument")
         sys.exit(1)
 
-    tokens = tokenize(sys.argv[1])
+    tokens = tokenize(sys.argv[1]) # o(n)
     # print(tokens)
-    token_dict = compute_word_frequencies(tokens)
-    print_frequencies(token_dict)
+    token_dict = compute_word_frequencies(tokens) # o(n)
+    print_frequencies(token_dict) # o(nlog(n))
 
 if __name__ == "__main__":
     main()

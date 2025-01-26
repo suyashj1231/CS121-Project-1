@@ -9,7 +9,7 @@ def main():
         which simplifies to be just : o(n1+n2)log(n1+n2)
     '''
     if len(sys.argv) != 3:
-        print("Error: Wrong Argument")
+        print("Error: Wrong Argument, type like <python3> <partB.py> <file1.txt> <file2.txt>")
         sys.exit(1)
     tokens1 = partA.tokenize(sys.argv[1]) # o(n1)
     tokens2 = partA.tokenize(sys.argv[2]) # o(n2)
